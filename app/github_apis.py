@@ -22,9 +22,3 @@ def generate_markdown(contents, level=0):
             # Generate markdown for a file
             markdown += f"{prefix}- [{content['name']}]({content['html_url']})\n"
     return markdown
-
-# Usage example
-# repo_url = "https://api.github.com/repos/aimanfatima/ds-algo/contents?ref=master"
-# contents = fetch_repo_contents(repo_url)
-# markdown = generate_markdown(contents)
-# print(markdown)
