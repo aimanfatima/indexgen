@@ -68,6 +68,20 @@
 			padding: 0;
 			z-index: 10; /* Ensure it's above other elements */
 		}
+
+		#downloadButton {
+			position: absolute;
+			background-color:rgb(95, 11, 11);
+			color:white;
+			top: 80px; 
+			right: 75px;
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			text-align: center;
+			padding: 0;
+			z-index: 10; /* Ensure it's above other elements */
+		}
     </style>
 </head>
 <body>
@@ -96,6 +110,9 @@
 		<textarea id="markdownOutput" class="form-control" rows="10"></textarea>
 		<button class="btn btn-outline-secondary rounded-circle" id="copyButton" title="Copy to Clipboard">
 			<i class="fa fa-paperclip"></i>
+		</button>
+		<button class="btn btn-outline-secondary rounded-circle" id="downloadButton" title="Download as INDEX.MD">
+			<i class="fa fa-download"></i>
 		</button>
 	</div>
 
@@ -165,6 +182,7 @@
 	
 			document.getElementById('markdownOutput').value = data.linkedMarkdown || 'Error generating markdown.';
 		};
+
 		document.getElementById('copyButton').addEventListener('click', function() {
 			const markdownOutput = document.getElementById('markdownOutput');
 			markdownOutput.select(); // Select the text
@@ -172,6 +190,19 @@
 			markdownOutput.setSelectionRange(0, 0); // Deselect text
 			// Indicate to the user that text was copied (change this to a less disruptive feedback)
 			alert("Copied to clipboard!");
+		});
+
+		document.getElementById('downloadButton').addEventListener('click', function() {
+			const markdownOutput = document.getElementById('markdownOutput').value;
+			const blob = new Blob([markdownOutput], { type: 'text/plain' });
+			const href = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = href;
+			link.download = "INDEX.md"; // File name for download
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			URL.revokeObjectURL(href); // Clean up the URL object
 		});
 
 	</script>
