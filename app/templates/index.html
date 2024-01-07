@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='/images/favicon.png') }}">
 	<style>
         body {
             background-color: hsl(180, 30%, 82%); /* light turquoise */
@@ -28,15 +29,25 @@
         .input-group .form-control {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
+			width: 60%;
             height: 50px;
         }
+
+		/* Specific styles for the branch dropdown */
+		.branch-select {
+			height: 50px;
+			width: 70px;  /* Shorter width */
+			background-color: #d6d6d6; /* Different background color, choose as needed */
+			border: 1px solid #ced4da; /* Consistent border with Bootstrap's style */
+		}
         .input-group .input-group-append .btn {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
         }
 		.btn-outline-secondary {
 			color: black;
-			background-color: rgb(239, 199, 103);
+			background-color: rgb(240, 211, 49);
+			border: 1px solid #ced4da;
 		}
         #markdownOutput {
             width: 80%;
@@ -54,7 +65,11 @@
     
 	<div class="form-group">
 		<div class="input-group mb-3">
-			<input type="text" id="repoUrl" class="form-control" placeholder="Enter GitHub Repository URL" aria-label="Repository URL" aria-describedby="button-addon2">
+			<input type="text" id="repoUrl" class="form-control" placeholder="Enter GitHub Repository URL" aria-label="Repository URL">
+			<select id="branchSelect" class="custom-select branch-select" aria-label="Select branch">
+				<option selected>Choose a branch...</option>
+				<!-- Branch options will be dynamically populated here -->
+			</select>
 			<div class="input-group-append">
 				<button class="btn btn-outline-secondary" type="button" id="button-addon2">
 					<i class="fas fa-arrow-right" id="arrow-icon"></i>
@@ -70,7 +85,46 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+		// Function to populate the dropdown with branch names
+		function populateBranches(branches) {
+			const branchSelect = document.getElementById('branchSelect');
+			branchSelect.innerHTML = ''; // Clear existing options
+			branches.forEach(branch => {
+				console.log(branch);
+				const option = document.createElement('option');
+				option.value = branch;
+				option.textContent = branch;
+				branchSelect.appendChild(option);
+			});
+		}
+		document.getElementById('repoUrl').onblur = async function() {
+			const repoUrl = document.getElementById('repoUrl').value;
+
+			const response = await fetch('/fetch-branches', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ repo_url: repoUrl })
+			});
+
+			if (response.ok) {
+				const branches = await response.json();
+				populateBranches(branches);
+			} else {
+				// Handle errors or no branches found
+				console.error("Failed to fetch branches");
+			}
+		};
 		document.getElementById('button-addon2').onclick = async function() {
+			// Get the selected branch
+			let selectedBranch = document.getElementById('branchSelect').value;
+
+			// Ensure a branch is selected
+			if (selectedBranch === "Choose a branch...") {
+				alert("Please select a branch");
+				return;
+			}
 			// Show loading spinner
 			document.getElementById('loading-spinner').style.display = 'inline-block';
 			// Hide arrow icon
@@ -82,7 +136,7 @@
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ repo_url: repoUrl })
+				body: JSON.stringify({ repo_url: repoUrl, branch: selectedBranch})
 			});
 			let data = await response.json();
 	
