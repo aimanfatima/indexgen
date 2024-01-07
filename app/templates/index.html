@@ -1,0 +1,98 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Repo Index Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+	<style>
+        body {
+            background-color: hsl(180, 30%, 82%); /* light turquoise */
+            padding-top: 20px;
+        }
+        .header {
+			padding-top: 20px;
+			font-family: 'Roboto', sans-serif;
+            text-align: center;
+        }
+        .form-group {
+            max-width: 65%;
+            margin: auto;
+        }
+        .input-group {
+            border-radius: 20px;
+        }
+        .input-group .form-control {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            height: 50px;
+        }
+        .input-group .input-group-append .btn {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+		.btn-outline-secondary {
+			color: black;
+			background-color: rgb(239, 199, 103);
+		}
+        #markdownOutput {
+            width: 80%;
+            height: 600px;
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2><b>GitHub Repository Index Markdown Generator</b></h2>
+    </div>
+    
+    
+	<div class="form-group">
+		<div class="input-group mb-3">
+			<input type="text" id="repoUrl" class="form-control" placeholder="Enter GitHub Repository URL" aria-label="Repository URL" aria-describedby="button-addon2">
+			<div class="input-group-append">
+				<button class="btn btn-outline-secondary" type="button" id="button-addon2">
+					<i class="fas fa-arrow-right" id="arrow-icon"></i>
+					<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loading-spinner" style="display: none;"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+    <textarea id="markdownOutput" class="form-control"></textarea>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+		document.getElementById('button-addon2').onclick = async function() {
+			// Show loading spinner
+			document.getElementById('loading-spinner').style.display = 'inline-block';
+			// Hide arrow icon
+			document.getElementById('arrow-icon').style.display = 'none';
+	
+			let repoUrl = document.getElementById('repoUrl').value;
+			let response = await fetch('/generate-markdown', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ repo_url: repoUrl })
+			});
+			let data = await response.json();
+	
+			// Hide loading spinner
+			document.getElementById('loading-spinner').style.display = 'none';
+			// Show arrow icon
+			document.getElementById('arrow-icon').style.display = 'inline-block';
+	
+			document.getElementById('markdownOutput').value = data.linkedMarkdown || 'Error generating markdown.';
+		};
+	</script>
+</body>
+</html>
