@@ -24,7 +24,7 @@
 		/>
 		<style>
 			body {
-				background-color: hsl(180, 30%, 82%); /* light turquoise */
+				background-color: hsl(43, 17%, 84%); /* light turquoise */
 				padding-top: 20px;
 			}
 			.header {
@@ -147,11 +147,41 @@
 				background-color: rgb(58, 131, 176);
 				color: white;
 			}
+
+			.navbar {
+				height: 45px;
+			}
 		</style>
 	</head>
 	<body>
-		<div class="header">
-			<h2><b>GitHub Repository Index Markdown Generator</b></h2>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+			<a class="navbar-brand" href="#">Index Generator</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">FAQ</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">CLI</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">GUI</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="header" style="padding-top: 50px;">
+			<h3><b>GitHub Repository Index Markdown Generator</b></h3>
 		</div>
 
 		<div class="form-group">
@@ -374,5 +404,12 @@
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<footer class="bg-light text-center text-lg-start mt-4 footer">
+			<div class="text-center p-3" style="background-color: rgba(140, 140, 140, 0.2);">
+			  <a href="https://github.com/aimanfatima/hyperlinked-index-md-generator/blob/main/LICENSE" target="_blank">GPL-3.0 license</a> |
+			  <a href="https://github.com/aimanfatima/ds-algo" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+			  Made with ❤︎ by <a href="https://github.com/aimanfatima" target="_blank">Aiman</a>
+			</div>
+		  </footer>
 	</body>
 </html>
