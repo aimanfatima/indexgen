@@ -52,7 +52,7 @@
         #markdownOutput {
             width: 80%;
             height: 550px;
-            margin: 20px auto;
+            margin: 0px auto;
             display: block;
         }
 		#copyButton {
@@ -82,6 +82,60 @@
 			padding: 0;
 			z-index: 10; /* Ensure it's above other elements */
 		}
+
+		.markdown-preview {
+			width: 80%;
+            height: 550px;
+            margin: 0px auto;
+            display: block;
+
+			border: 1px solid #ddd;
+			padding: 0px;
+			background-color: #fff;
+			min-height: 100px; /* Or any other height */
+
+			overflow-y: auto; /* Add vertical scrollbar if content is long */
+			padding: .375rem .75rem; /* Bootstrap's default padding for textareas */
+			margin-bottom: 1rem; /* Optional: To provide some space below the container */
+			border: 1px solid #ced4da; /* Bootstrap's default border for textareas */
+			border-radius: .25rem; /* Bootstrap's default border-radius for textareas */
+			resize: none; 
+		}
+		/* Ensure the nav-tabs fill the width */
+		
+		.nav-tabs {
+			width: 80%;
+			margin-left: 145px;
+			text-align: center;
+		}
+
+		.nav-item {
+			width: 50%; /* Each tab takes half the width */
+		}
+
+		.nav-tabs .nav-link {
+			border: 1px solid #ddd;
+			border-bottom: none; /* Remove border-bottom to blend with the content */
+			margin-bottom: -1px; /* Pull the tab content up */
+		}
+
+		.tab-content {
+			width: 100%;
+			border: 1px solid #ddd;
+		}
+
+
+		.nav-tabs .nav-item .nav-link {
+			border: none;
+			background-color: rgb(181, 181, 181);
+			color: white;
+		}
+
+		.nav-tabs .nav-item .nav-link.active {
+			background-color: rgb(58, 131, 176);
+			color: white;
+		}
+
     </style>
 </head>
 <body>
@@ -105,9 +159,27 @@
 			</div>
 		</div>
 	</div>
+	  
 
-    <div class="position-relative">
-		<textarea id="markdownOutput" class="form-control" rows="10"></textarea>
+	<div class="tabs-container">
+		<ul class="nav nav-tabs" id="markdownTabs" role="tablist">
+		  <li class="nav-item">
+			<a class="nav-link active" id="raw-tab" data-toggle="tab" href="#raw" role="tab" aria-controls="raw" aria-selected="true">Raw Markdown</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" id="preview-tab" data-toggle="tab" href="#preview" role="tab" aria-controls="preview" aria-selected="false">Preview</a>
+		  </li>
+		</ul>
+	  </div>
+    <div class="position-relative">	
+		<div class="tab-content">
+			<div class="tab-pane active" id="raw" role="tabpanel" aria-labelledby="raw-tab">
+			  <textarea id="markdownOutput" class="form-control" rows="10" style="resize: none;"></textarea>
+			</div>
+			<div class="tab-pane" id="preview" role="tabpanel" aria-labelledby="preview-tab">
+			  <div id="markdownPreview" class="markdown-preview form-control"></div>
+			</div>
+		  </div>
 		<button class="btn btn-outline-secondary rounded-circle" id="copyButton" title="Copy to Clipboard">
 			<i class="fa fa-paperclip"></i>
 		</button>
@@ -119,6 +191,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
     <script>
 		// Function to populate the dropdown with branch names
 		function populateBranches(branches) {
@@ -205,6 +278,26 @@
 			URL.revokeObjectURL(href); // Clean up the URL object
 		});
 
+		// Initialize the markdown converter
+		const converter = new showdown.Converter();
+
+		// Event listener for tab change
+		$('#markdownTabs a').on('click', function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+			
+			// Check if the preview tab is now active
+			if (this.id === 'preview-tab') {
+				const text = document.getElementById('markdownOutput').value;
+				const html = converter.makeHtml(text);
+				document.getElementById('markdownPreview').innerHTML = html;
+			}
+		});
+
 	</script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
 </body>
 </html>
