@@ -2,302 +2,377 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Repo Index Generator</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-	<link rel="icon" type="image/png" href="{{ url_for('static', filename='/images/favicon.png') }}">
-	<style>
-        body {
-            background-color: hsl(180, 30%, 82%); /* light turquoise */
-            padding-top: 20px;
-        }
-        .header {
-			padding-top: 20px;
-			font-family: 'Roboto', sans-serif;
-            text-align: center;
-        }
-        .form-group {
-            max-width: 65%;
-            margin: auto;
-        }
-        .input-group {
-            border-radius: 20px;
-        }
-        .input-group .form-control {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-			width: 60%;
-            height: 50px;
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<title>Repo Index Generator</title>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			href="{{ url_for('static', filename='/images/favicon.png') }}"
+		/>
+		<style>
+			body {
+				background-color: hsl(180, 30%, 82%); /* light turquoise */
+				padding-top: 20px;
+			}
+			.header {
+				padding-top: 20px;
+				font-family: "Roboto", sans-serif;
+				text-align: center;
+			}
+			.form-group {
+				max-width: 65%;
+				margin: auto;
+			}
+			.input-group {
+				border-radius: 20px;
+			}
+			.input-group .form-control {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+				width: 60%;
+				height: 50px;
+			}
 
-		/* Specific styles for the branch dropdown */
-		.branch-select {
-			height: 50px;
-			width: 70px;  /* Shorter width */
-			background-color: #d6d6d6; /* Different background color, choose as needed */
-			border: 1px solid #ced4da; /* Consistent border with Bootstrap's style */
-		}
-        .input-group .input-group-append .btn {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-		.btn-outline-secondary {
-			color: black;
-			background-color: rgb(240, 211, 49);
-			border: 1px solid #ced4da;
-		}
-        #markdownOutput {
-            width: 80%;
-            height: 550px;
-            margin: 0px auto;
-            display: block;
-        }
-		#copyButton {
-			position: absolute;
-			background-color:rgb(11, 56, 95);
-			color:white;
-			top: 0px; 
-			right: 75px;
-			width: 60px;
-			height: 60px;
-			border-radius: 50%;
-			text-align: center;
-			padding: 0;
-			z-index: 10; /* Ensure it's above other elements */
-		}
+			/* Specific styles for the branch dropdown */
+			.branch-select {
+				height: 50px;
+				width: 70px; /* Shorter width */
+				background-color: #d6d6d6; /* Different background color, choose as needed */
+				border: 1px solid #ced4da; /* Consistent border with Bootstrap's style */
+			}
+			.input-group .input-group-append .btn {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+			.btn-outline-secondary {
+				color: black;
+				background-color: rgb(240, 211, 49);
+				border: 1px solid #ced4da;
+			}
+			#markdownOutput {
+				width: 80%;
+				height: 550px;
+				margin: 0px auto;
+				display: block;
+			}
+			#copyButton {
+				position: absolute;
+				background-color: rgb(11, 56, 95);
+				color: white;
+				top: 0px;
+				right: 75px;
+				width: 60px;
+				height: 60px;
+				border-radius: 50%;
+				text-align: center;
+				padding: 0;
+				z-index: 10; /* Ensure it's above other elements */
+			}
 
-		#downloadButton {
-			position: absolute;
-			background-color:rgb(95, 11, 11);
-			color:white;
-			top: 80px; 
-			right: 75px;
-			width: 60px;
-			height: 60px;
-			border-radius: 50%;
-			text-align: center;
-			padding: 0;
-			z-index: 10; /* Ensure it's above other elements */
-		}
+			#downloadButton {
+				position: absolute;
+				background-color: rgb(95, 11, 11);
+				color: white;
+				top: 80px;
+				right: 75px;
+				width: 60px;
+				height: 60px;
+				border-radius: 50%;
+				text-align: center;
+				padding: 0;
+				z-index: 10; /* Ensure it's above other elements */
+			}
 
-		.markdown-preview {
-			width: 80%;
-            height: 550px;
-            margin: 0px auto;
-            display: block;
+			.markdown-preview {
+				width: 80%;
+				height: 550px;
+				margin: 0px auto;
+				display: block;
 
-			border: 1px solid #ddd;
-			padding: 0px;
-			background-color: #fff;
-			min-height: 100px; /* Or any other height */
+				border: 1px solid #ddd;
+				padding: 0px;
+				background-color: #fff;
+				min-height: 100px; /* Or any other height */
 
-			overflow-y: auto; /* Add vertical scrollbar if content is long */
-			padding: .375rem .75rem; /* Bootstrap's default padding for textareas */
-			margin-bottom: 1rem; /* Optional: To provide some space below the container */
-			border: 1px solid #ced4da; /* Bootstrap's default border for textareas */
-			border-radius: .25rem; /* Bootstrap's default border-radius for textareas */
-			resize: none; 
-		}
-		/* Ensure the nav-tabs fill the width */
-		
-		.nav-tabs {
-			width: 80%;
-			margin-left: 145px;
-			text-align: center;
-		}
+				overflow-y: auto; /* Add vertical scrollbar if content is long */
+				padding: 0.375rem 0.75rem; /* Bootstrap's default padding for textareas */
+				margin-bottom: 1rem; /* Optional: To provide some space below the container */
+				border: 1px solid #ced4da; /* Bootstrap's default border for textareas */
+				border-radius: 0.25rem; /* Bootstrap's default border-radius for textareas */
+				resize: none;
+			}
+			/* Ensure the nav-tabs fill the width */
 
-		.nav-item {
-			width: 50%; /* Each tab takes half the width */
-		}
+			.nav-tabs {
+				width: 80%;
+				margin-left: 145px;
+				text-align: center;
+			}
 
-		.nav-tabs .nav-link {
-			border: 1px solid #ddd;
-			border-bottom: none; /* Remove border-bottom to blend with the content */
-			margin-bottom: -1px; /* Pull the tab content up */
-		}
+			.nav-item {
+				width: 50%; /* Each tab takes half the width */
+			}
 
-		.tab-content {
-			width: 100%;
-			border: 1px solid #ddd;
-		}
+			.nav-tabs .nav-link {
+				border: 1px solid #ddd;
+				border-bottom: none; /* Remove border-bottom to blend with the content */
+				margin-bottom: -1px; /* Pull the tab content up */
+			}
 
+			.tab-content {
+				width: 100%;
+				border: 1px solid #ddd;
+			}
 
-		.nav-tabs .nav-item .nav-link {
-			border: none;
-			background-color: rgb(181, 181, 181);
-			color: white;
-		}
+			.nav-tabs .nav-item .nav-link {
+				border: none;
+				background-color: rgb(181, 181, 181);
+				color: white;
+			}
 
-		.nav-tabs .nav-item .nav-link.active {
-			background-color: rgb(58, 131, 176);
-			color: white;
-		}
+			.nav-tabs .nav-item .nav-link.active {
+				background-color: rgb(58, 131, 176);
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<h2><b>GitHub Repository Index Markdown Generator</b></h2>
+		</div>
 
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h2><b>GitHub Repository Index Markdown Generator</b></h2>
-    </div>
-    
-    
-	<div class="form-group">
-		<div class="input-group mb-3">
-			<input type="text" id="repoUrl" class="form-control" placeholder="Enter GitHub Repository URL" aria-label="Repository URL">
-			<select id="branchSelect" class="custom-select branch-select" aria-label="Select branch">
-				<option selected>Choose a branch...</option>
-				<!-- Branch options will be dynamically populated here -->
-			</select>
-			<div class="input-group-append">
-				<button class="btn btn-outline-secondary" type="button" id="button-addon2">
-					<i class="fas fa-arrow-right" id="arrow-icon"></i>
-					<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="loading-spinner" style="display: none;"></span>
-				</button>
+		<div class="form-group">
+			<div class="input-group mb-3">
+				<input
+					type="text"
+					id="repoUrl"
+					class="form-control"
+					placeholder="Enter GitHub Repository URL"
+					aria-label="Repository URL"
+				/>
+				<select
+					id="branchSelect"
+					class="custom-select branch-select"
+					aria-label="Select branch"
+				>
+					<option selected>Choose a branch...</option>
+					<!-- Branch options will be dynamically populated here -->
+				</select>
+				<div class="input-group-append">
+					<button
+						class="btn btn-outline-secondary"
+						type="button"
+						id="button-addon2"
+					>
+						<i class="fas fa-arrow-right" id="arrow-icon"></i>
+						<span
+							class="spinner-border spinner-border-sm"
+							role="status"
+							aria-hidden="true"
+							id="loading-spinner"
+							style="display: none"
+						></span>
+					</button>
+				</div>
 			</div>
 		</div>
-	</div>
-	  
 
-	<div class="tabs-container">
-		<ul class="nav nav-tabs" id="markdownTabs" role="tablist">
-		  <li class="nav-item">
-			<a class="nav-link active" id="raw-tab" data-toggle="tab" href="#raw" role="tab" aria-controls="raw" aria-selected="true">Raw Markdown</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" id="preview-tab" data-toggle="tab" href="#preview" role="tab" aria-controls="preview" aria-selected="false">Preview</a>
-		  </li>
-		</ul>
-	  </div>
-    <div class="position-relative">	
-		<div class="tab-content">
-			<div class="tab-pane active" id="raw" role="tabpanel" aria-labelledby="raw-tab">
-			  <textarea id="markdownOutput" class="form-control" rows="10" style="resize: none;"></textarea>
+		<div class="tabs-container">
+			<ul class="nav nav-tabs" id="markdownTabs" role="tablist">
+				<li class="nav-item">
+					<a
+						class="nav-link active"
+						id="raw-tab"
+						data-toggle="tab"
+						href="#raw"
+						role="tab"
+						aria-controls="raw"
+						aria-selected="true"
+						>Raw Markdown</a
+					>
+				</li>
+				<li class="nav-item">
+					<a
+						class="nav-link"
+						id="preview-tab"
+						data-toggle="tab"
+						href="#preview"
+						role="tab"
+						aria-controls="preview"
+						aria-selected="false"
+						>Preview</a
+					>
+				</li>
+			</ul>
+		</div>
+		<div class="position-relative">
+			<div class="tab-content">
+				<div
+					class="tab-pane active"
+					id="raw"
+					role="tabpanel"
+					aria-labelledby="raw-tab"
+				>
+					<textarea
+						id="markdownOutput"
+						class="form-control"
+						rows="10"
+						style="resize: none"
+					></textarea>
+				</div>
+				<div
+					class="tab-pane"
+					id="preview"
+					role="tabpanel"
+					aria-labelledby="preview-tab"
+				>
+					<div id="markdownPreview" class="markdown-preview form-control"></div>
+				</div>
 			</div>
-			<div class="tab-pane" id="preview" role="tabpanel" aria-labelledby="preview-tab">
-			  <div id="markdownPreview" class="markdown-preview form-control"></div>
-			</div>
-		  </div>
-		<button class="btn btn-outline-secondary rounded-circle" id="copyButton" title="Copy to Clipboard">
-			<i class="fa fa-paperclip"></i>
-		</button>
-		<button class="btn btn-outline-secondary rounded-circle" id="downloadButton" title="Download as INDEX.MD">
-			<i class="fa fa-download"></i>
-		</button>
-	</div>
+			<button
+				class="btn btn-outline-secondary rounded-circle"
+				id="copyButton"
+				title="Copy to Clipboard"
+			>
+				<i class="fa fa-paperclip"></i>
+			</button>
+			<button
+				class="btn btn-outline-secondary rounded-circle"
+				id="downloadButton"
+				title="Download as INDEX.MD"
+			>
+				<i class="fa fa-download"></i>
+			</button>
+		</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
-    <script>
-		// Function to populate the dropdown with branch names
-		function populateBranches(branches) {
-			const branchSelect = document.getElementById('branchSelect');
-			branchSelect.innerHTML = ''; // Clear existing options
-			branches.forEach(branch => {
-				console.log(branch);
-				const option = document.createElement('option');
-				option.value = branch;
-				option.textContent = branch;
-				branchSelect.appendChild(option);
-			});
-		}
-		document.getElementById('repoUrl').onblur = async function() {
-			const repoUrl = document.getElementById('repoUrl').value;
-
-			const response = await fetch('/fetch-branches', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ repo_url: repoUrl })
-			});
-
-			if (response.ok) {
-				const branches = await response.json();
-				populateBranches(branches);
-			} else {
-				// Handle errors or no branches found
-				console.error("Failed to fetch branches");
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+		<script>
+			// Function to populate the dropdown with branch names
+			function populateBranches(branches) {
+				const branchSelect = document.getElementById("branchSelect");
+				branchSelect.innerHTML = ""; // Clear existing options
+				branches.forEach((branch) => {
+					console.log(branch);
+					const option = document.createElement("option");
+					option.value = branch;
+					option.textContent = branch;
+					branchSelect.appendChild(option);
+				});
 			}
-		};
-		document.getElementById('button-addon2').onclick = async function() {
-			// Get the selected branch
-			let selectedBranch = document.getElementById('branchSelect').value;
+			document.getElementById("repoUrl").onblur = async function () {
+				const repoUrl = document.getElementById("repoUrl").value;
 
-			// Ensure a branch is selected
-			if (selectedBranch === "Choose a branch...") {
-				alert("Please select a branch");
-				return;
-			}
-			// Show loading spinner
-			document.getElementById('loading-spinner').style.display = 'inline-block';
-			// Hide arrow icon
-			document.getElementById('arrow-icon').style.display = 'none';
-	
-			let repoUrl = document.getElementById('repoUrl').value;
-			let response = await fetch('/generate-markdown', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ repo_url: repoUrl, branch: selectedBranch})
+				const response = await fetch("/fetch-branches", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ repo_url: repoUrl }),
+				});
+
+				if (response.ok) {
+					const branches = await response.json();
+					populateBranches(branches);
+				} else {
+					// Handle errors or no branches found
+					console.error("Failed to fetch branches");
+				}
+			};
+			document.getElementById("button-addon2").onclick = async function () {
+				// Get the selected branch
+				let selectedBranch = document.getElementById("branchSelect").value;
+
+				// Ensure a branch is selected
+				if (selectedBranch === "Choose a branch...") {
+					alert("Please select a branch");
+					return;
+				}
+				// Show loading spinner
+				document.getElementById("loading-spinner").style.display =
+					"inline-block";
+				// Hide arrow icon
+				document.getElementById("arrow-icon").style.display = "none";
+
+				let repoUrl = document.getElementById("repoUrl").value;
+				let response = await fetch("/generate-markdown", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ repo_url: repoUrl, branch: selectedBranch }),
+				});
+				let data = await response.json();
+
+				// Hide loading spinner
+				document.getElementById("loading-spinner").style.display = "none";
+				// Show arrow icon
+				document.getElementById("arrow-icon").style.display = "inline-block";
+
+				document.getElementById("markdownOutput").value =
+					data.linkedMarkdown || "Error generating markdown.";
+			};
+
+			document
+				.getElementById("copyButton")
+				.addEventListener("click", function () {
+					const markdownOutput = document.getElementById("markdownOutput");
+					markdownOutput.select(); // Select the text
+					document.execCommand("copy"); // Copy to clipboard
+					markdownOutput.setSelectionRange(0, 0); // Deselect text
+					// Indicate to the user that text was copied (change this to a less disruptive feedback)
+					alert("Copied to clipboard!");
+				});
+
+			document
+				.getElementById("downloadButton")
+				.addEventListener("click", function () {
+					const markdownOutput =
+						document.getElementById("markdownOutput").value;
+					const blob = new Blob([markdownOutput], { type: "text/plain" });
+					const href = URL.createObjectURL(blob);
+					const link = document.createElement("a");
+					link.href = href;
+					link.download = "INDEX.md"; // File name for download
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+					URL.revokeObjectURL(href); // Clean up the URL object
+				});
+
+			// Initialize the markdown converter
+			const converter = new showdown.Converter();
+
+			// Event listener for tab change
+			$("#markdownTabs a").on("click", function (e) {
+				e.preventDefault();
+				$(this).tab("show");
+
+				// Check if the preview tab is now active
+				if (this.id === "preview-tab") {
+					const text = document.getElementById("markdownOutput").value;
+					const html = converter.makeHtml(text);
+					document.getElementById("markdownPreview").innerHTML = html;
+				}
 			});
-			let data = await response.json();
-	
-			// Hide loading spinner
-			document.getElementById('loading-spinner').style.display = 'none';
-			// Show arrow icon
-			document.getElementById('arrow-icon').style.display = 'inline-block';
-	
-			document.getElementById('markdownOutput').value = data.linkedMarkdown || 'Error generating markdown.';
-		};
-
-		document.getElementById('copyButton').addEventListener('click', function() {
-			const markdownOutput = document.getElementById('markdownOutput');
-			markdownOutput.select(); // Select the text
-			document.execCommand('copy'); // Copy to clipboard
-			markdownOutput.setSelectionRange(0, 0); // Deselect text
-			// Indicate to the user that text was copied (change this to a less disruptive feedback)
-			alert("Copied to clipboard!");
-		});
-
-		document.getElementById('downloadButton').addEventListener('click', function() {
-			const markdownOutput = document.getElementById('markdownOutput').value;
-			const blob = new Blob([markdownOutput], { type: 'text/plain' });
-			const href = URL.createObjectURL(blob);
-			const link = document.createElement('a');
-			link.href = href;
-			link.download = "INDEX.md"; // File name for download
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
-			URL.revokeObjectURL(href); // Clean up the URL object
-		});
-
-		// Initialize the markdown converter
-		const converter = new showdown.Converter();
-
-		// Event listener for tab change
-		$('#markdownTabs a').on('click', function (e) {
-			e.preventDefault();
-			$(this).tab('show');
-			
-			// Check if the preview tab is now active
-			if (this.id === 'preview-tab') {
-				const text = document.getElementById('markdownOutput').value;
-				const html = converter.makeHtml(text);
-				document.getElementById('markdownPreview').innerHTML = html;
-			}
-		});
-
-	</script>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	
-</body>
+		</script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	</body>
 </html>
