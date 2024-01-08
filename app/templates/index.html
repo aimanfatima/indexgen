@@ -151,6 +151,12 @@
 			.navbar {
 				height: 40px;
 			}
+
+			hr {
+				border: 0;
+				height: 1px;
+				background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+			}
 		</style>
 	</head>
 	<body>
@@ -162,7 +168,7 @@
 			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item active">
-						<a class="nav-link" href="#">About</a>
+						<a class="nav-link" href="#about">About</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">FAQ</a>
@@ -287,6 +293,23 @@
 				<i class="fa fa-download"></i>
 			</button>
 		</div>
+		<section id="about" class="container">
+			<div class="container my-5">
+				<div class="row">
+					<div class="col-lg-8 mx-auto">
+						<h2 class="text-center">About</h2>
+						<hr class="my-4">
+						<p class="text-justify">
+							This project is a web application designed to generate a linked table of contents or directory tree structure for GitHub repositories. It provides a clear, navigable structure to any given repository, presenting its contents in a readable and accessible markdown format. The application features a user-friendly interface with functionalities to view raw markdown, preview the markdown rendering, and download the content as an INDEX.MD file.
+						</p>
+						<p class="text-justify">
+							Users can input a GitHub repository URL, and the application will fetch and display the repository's structure. It includes features for copying the markdown to the clipboard and downloading it as a markdown file. The project aims to simplify navigation and understanding of large repositories, making it easier for developers and content creators to manage and share their code and documentation.
+						</p>
+					</div>
+				</div>
+			</div>
+			
+		</section>		
 
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
