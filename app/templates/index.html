@@ -155,14 +155,69 @@
 			hr {
 				border: 0;
 				height: 1px;
-				background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+				background-image: linear-gradient(
+					to right,
+					rgba(0, 0, 0, 0),
+					rgba(0, 0, 0, 0.75),
+					rgba(0, 0, 0, 0)
+				);
+			}
+
+			#faq-section {
+				background-color: #fff; /* White background */
+				padding: 2rem 0; /* Padding for top and bottom */
+			}
+
+			#accordion {
+				max-width: 650px; /* Set a max-width for the accordion */
+				margin: auto; /* Center the accordion in the page */
+			}
+
+			#accordion .card {
+				border: none;
+			}
+
+			#accordion .card-header {
+				background-color: #f8f9fa;
+				border-bottom: none;
+			}
+
+			#accordion .card-body {
+				text-align: left; /* Center the text inside the accordion body */
+				border-left: 2px solid #007bff;
+			}
+
+			#faq-section h2 {
+				margin-bottom: 0.5rem; /* Smaller bottom margin for the heading */
+			}
+
+			#faq-section hr {
+				margin: 0 auto 2rem auto; /* Center the horizontal rule with automatic margins */
+				width: 50%; /* Shorter width for the horizontal rule */
+			}
+
+			/* Additional styles to ensure that the page has no extra spacing */
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
 			}
 		</style>
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 			<a class="navbar-brand" href="#">Index Generator</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<button
+				class="navbar-toggler"
+				type="button"
+				data-toggle="collapse"
+				data-target="#navbarNav"
+				aria-controls="navbarNav"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+			>
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -171,22 +226,16 @@
 						<a class="nav-link" href="#about">About</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">FAQ</a>
+						<a class="nav-link" href="#faq-section">FAQs</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">CLI</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">GUI</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Contact</a>
 					</li>
 				</ul>
 			</div>
 		</nav>
 
-		<div class="header" style="padding-top: 50px;">
+		<div class="header" style="padding-top: 90px">
 			<h3><b>GitHub Repository Index Markdown Generator</b></h3>
 		</div>
 
@@ -298,18 +347,89 @@
 				<div class="row">
 					<div class="col-lg-8 mx-auto">
 						<h2 class="text-center">About</h2>
-						<hr class="my-4">
+						<hr class="my-4" />
 						<p class="text-justify">
-							This project is a web application designed to generate a linked table of contents or directory tree structure for GitHub repositories. It provides a clear, navigable structure to any given repository, presenting its contents in a readable and accessible markdown format. The application features a user-friendly interface with functionalities to view raw markdown, preview the markdown rendering, and download the content as an INDEX.MD file.
+							This project is a web application designed to generate a linked
+							table of contents or directory tree structure for GitHub
+							repositories. It provides a clear, navigable structure to any
+							given repository, presenting its contents in a readable and
+							accessible markdown format. The application features a
+							user-friendly interface with functionalities to view raw markdown,
+							preview the markdown rendering, and download the content as an
+							INDEX.MD file.
 						</p>
 						<p class="text-justify">
-							Users can input a GitHub repository URL, and the application will fetch and display the repository's structure. It includes features for copying the markdown to the clipboard and downloading it as a markdown file. The project aims to simplify navigation and understanding of large repositories, making it easier for developers and content creators to manage and share their code and documentation.
+							Users can input a GitHub repository URL, and the application will
+							fetch and display the repository's structure. It includes features
+							for copying the markdown to the clipboard and downloading it as a
+							markdown file. The project aims to simplify navigation and
+							understanding of large repositories, making it easier for
+							developers and content creators to manage and share their code and
+							documentation.
 						</p>
 					</div>
 				</div>
 			</div>
-			
-		</section>		
+		</section>
+
+		<section id="faq-section" class="bg-white">
+			<div class="container">
+				<h2 class="text-center">FAQs</h2>
+				<hr class="my-4" />
+				<div id="accordion">
+					<!-- FAQ Item 1 -->
+					<div class="card">
+						<div class="card-header" id="headingOne">
+							<h5 class="mb-0">
+								<button
+									class="btn btn-link"
+									data-toggle="collapse"
+									data-target="#collapseOne"
+									aria-expanded="true"
+									aria-controls="collapseOne"
+								>
+									FAQ Question One
+								</button>
+							</h5>
+						</div>
+
+						<div
+							id="collapseOne"
+							class="collapse show"
+							aria-labelledby="headingOne"
+							data-parent="#accordion"
+						>
+							<div class="card-body">Answer to FAQ question one goes here.</div>
+						</div>
+					</div>
+					<!-- FAQ Item 2 -->
+					<div class="card">
+						<div class="card-header" id="headingTwo">
+							<h5 class="mb-0">
+								<button
+									class="btn btn-link collapsed"
+									data-toggle="collapse"
+									data-target="#collapseTwo"
+									aria-expanded="false"
+									aria-controls="collapseTwo"
+								>
+									FAQ Question Two
+								</button>
+							</h5>
+						</div>
+						<div
+							id="collapseTwo"
+							class="collapse"
+							aria-labelledby="headingTwo"
+							data-parent="#accordion"
+						>
+							<div class="card-body">Answer to FAQ question two goes here.</div>
+						</div>
+					</div>
+					<!-- Add more FAQ items as needed -->
+				</div>
+			</div>
+		</section>
 
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
@@ -428,11 +548,22 @@
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<footer class="bg-light text-center text-lg-start mt-4 footer">
-			<div class="text-center p-3" style="background-color: rgba(140, 140, 140, 0.2);">
-			  <a href="https://github.com/aimanfatima/hyperlinked-index-md-generator/blob/main/LICENSE" target="_blank">GPL-3.0 license</a> |
-			  <a href="https://github.com/aimanfatima/ds-algo" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
-			  Made with ❤︎ by <a href="https://github.com/aimanfatima" target="_blank">Aiman</a>
+			<div
+				class="text-center p-3"
+				style="background-color: rgba(140, 140, 140, 0.2)"
+			>
+				<a
+					href="https://github.com/aimanfatima/hyperlinked-index-md-generator/blob/main/LICENSE"
+					target="_blank"
+					>GPL-3.0 license</a
+				>
+				|
+				<a href="https://github.com/aimanfatima/ds-algo" target="_blank"
+					><i class="fab fa-github"></i> GitHub</a
+				>
+				| Made with ❤︎ by
+				<a href="https://github.com/aimanfatima" target="_blank">Aiman</a>
 			</div>
-		  </footer>
+		</footer>
 	</body>
 </html>
