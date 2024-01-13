@@ -1,4 +1,5 @@
 import requests
+import os
 from flask import request, jsonify, Blueprint, render_template
 from .github_apis import fetch_repo_contents, generate_markdown
 from .utils.github_utils import convert_repo_url_to_api_endpoint, get_user_and_repo_from_url
@@ -20,7 +21,10 @@ def fetch_branches():
     branches_url = f"https://api.github.com/repos/{user}/{repo}/branches"
 
     # Make a request to the GitHub API to fetch the branches
-    response = requests.get(branches_url)
+    headers = {
+        'Authorization': 'token ' + os.environ.get('GITHUB_TOKEN')
+    }
+    response = requests.get(branches_url, headers=headers)
 
     if response.status_code == 200:
         branches = response.json()

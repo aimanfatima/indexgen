@@ -1,7 +1,31 @@
 blinker==1.7.0
+certifi==2023.11.17
+charset-normalizer==3.3.2
 click==8.1.7
+docutils==0.20.1
 Flask==3.0.0
+-e git+ssh://git@github.com/aimanfatima/hyperlinked-index-md-generator.git@54cf10b8c0ed62a75dc875388fe2e9cb992d0619#egg=hyperlined_index_md_generator
+-e git+ssh://git@github.com/aimanfatima/hyperlinked-index-md-generator.git@54cf10b8c0ed62a75dc875388fe2e9cb992d0619#egg=hyperlinked_index_md_generator
+idna==3.6
+importlib-metadata==7.0.1
+-e git+ssh://git@github.com/aimanfatima/hyperlinked-index-md-generator.git@54cf10b8c0ed62a75dc875388fe2e9cb992d0619#egg=indexgen
 itsdangerous==2.1.2
+jaraco.classes==3.3.0
 Jinja2==3.1.2
+keyring==24.3.0
+markdown-it-py==3.0.0
 MarkupSafe==2.1.3
+mdurl==0.1.2
+more-itertools==10.2.0
+nh3==0.2.15
+pkginfo==1.9.6
+Pygments==2.17.2
+readme-renderer==42.0
+requests==2.31.0
+requests-toolbelt==1.0.0
+rfc3986==2.0.0
+rich==13.7.0
+twine==4.0.2
+urllib3==2.1.0
 Werkzeug==3.0.1
+zipp==3.17.0
