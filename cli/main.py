@@ -26,7 +26,6 @@ def generate(path, output, ignore, include):
     path = os.path.abspath(path)
     gitignore_patterns = read_gitignore(path)
     all_ignore_patterns = list(ignore) + gitignore_patterns + GLOBAL_IGNORE_PATTERNS
-    print(all_ignore_patterns)
 
     markdown_content = generate_index(path, all_ignore_patterns, include)
     # markdown_content = generate_index(path)
@@ -39,7 +38,6 @@ def generate(path, output, ignore, include):
     else:
         # Print the content to the console
         click.echo(markdown_content)
-        print("Done")
 
 
 
@@ -126,7 +124,6 @@ def generate_index(directory, ignore_patterns, include_patterns=None):
         if (len(root_parts) == 1 and root_parts[0] == '.'):
             current_depth = 0
         for f in sorted(included_files):
-            print(current_depth)
             file_link = os.path.join(os.path.relpath(root, directory), f).replace(' ', '%20')
             if ((len(root_parts) == 1 and root_parts[0] == '.')):
                 markdown_content += "{}- [{}]({})\n".format('  ' * current_depth, f, file_link)
@@ -134,31 +131,6 @@ def generate_index(directory, ignore_patterns, include_patterns=None):
                 markdown_content += "{}  - [{}]({})\n".format('  ' * current_depth, f, file_link)
 
     return markdown_content
-
-
-# def generate_index(directory):
-#     non_ignored_files = get_git_non_ignored_files(directory)
-#     print(non_ignored_files)
-#     immediate_folder_name = os.path.basename(os.path.normpath(directory))
-#     markdown_content = "# Index of {}\n\n".format(immediate_folder_name)
-
-#     # Sort the files and directories for structured output
-#     non_ignored_files.sort()
-
-#     for file_path in non_ignored_files:
-#         # Calculate indentation based on directory depth
-#         relative_path = os.path.relpath(file_path, directory)
-#         depth = relative_path.count(os.sep)
-#         indent = '  ' * depth
-
-#         # Create markdown line for file or directory
-#         basename = os.path.basename(file_path)
-#         markdown_line = "{}- [{}]({})\n".format(indent, basename, file_path)
-#         markdown_content += markdown_line
-
-#     return markdown_content
-
-
 
 def read_gitignore(directory):
     """
