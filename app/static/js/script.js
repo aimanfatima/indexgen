@@ -101,3 +101,58 @@ $("#markdownTabs a").on("click", function (e) {
 		document.getElementById("markdownPreview").innerHTML = html;
 	}
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+	fetch("/static/json/faqs.json")
+		.then((response) => response.json())
+		.then((faqs) => {
+			const accordionElement = document.getElementById("accordion");
+			accordionElement.innerHTML = ""; // Clear current content
+
+			faqs.forEach((faq, index) => {
+				// Create the card element
+				const card = document.createElement("div");
+				card.classList.add("card");
+
+				// Create the card header
+				const cardHeader = document.createElement("div");
+				cardHeader.classList.add("card-header");
+				cardHeader.id = `heading${index}`;
+
+				// Create the button for the card header
+				const button = document.createElement("button");
+				button.classList.add("btn", "btn-link");
+				button.setAttribute("data-toggle", "collapse");
+				button.setAttribute("data-target", `#collapse${index}`);
+				button.setAttribute("aria-expanded", "false");
+				button.setAttribute("aria-controls", `collapse${index}`);
+				button.textContent = faq.question;
+
+				// Create the collapse div
+				const collapseDiv = document.createElement("div");
+				collapseDiv.id = `collapse${index}`;
+				collapseDiv.classList.add("collapse");
+				if (index === 0) collapseDiv.classList.add("show");
+				collapseDiv.setAttribute(
+					"aria-labelledby",
+					`
+              heading${index}`
+				);
+				collapseDiv.setAttribute("data-parent", "#accordion");
+				// Create the card body
+				const cardBody = document.createElement("div");
+				cardBody.classList.add("card-body");
+				cardBody.textContent = faq.answer;
+
+				// Append elements to build the accordion structure
+				cardHeader.appendChild(button);
+				collapseDiv.appendChild(cardBody);
+				card.appendChild(cardHeader);
+				card.appendChild(collapseDiv);
+				accordionElement.appendChild(card);
+			});
+		})
+		.catch((error) => {
+			console.error("Error fetching FAQs:", error);
+		});
+});

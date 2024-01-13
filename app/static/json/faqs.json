@@ -1,0 +1,31 @@
+[
+    {
+      "question": "What is the purpose of the Hyperlinked Index MD Generator?",
+      "answer": "The Hyperlinked Index MD Generator is a tool designed to create a navigable markdown document that serves as a table of contents for your project directories. It organizes files and folders into a clickable index, making it easier to understand and navigate the structure of your project.."
+    },
+    {
+      "question": "Who can benefit from using this tool?",
+      "answer": "This tool is beneficial for developers, content creators, or anyone who wants to provide a clear and structured overview of their project's files and directories. It's especially useful for large projects where keeping track of numerous files can be challenging."
+    },
+    {
+      "question": "How do I generate an index using the web app?",
+      "answer": "Simply enter the URL of your GitHub repository and select the branch you want to index. The web app will fetch the directory structure and generate a clickable markdown index for you."
+    },
+    {
+      "question": "Can I use the web app to generate an index for private repositories?",
+      "answer": "Currently, the web app only supports public repositories due to access restrictions. If you need to index a private repository, consider using the CLI tool on your local machine where you have access to the private files."
+    },
+    {
+      "question": "Is there a rate limit for generating indexes using the web app?",
+      "answer": "The web app may have a rate limit based on the GitHub API's usage restrictions. If you encounter rate-limiting issues, try generating the index at a later time or use the CLI tool locally."
+    },
+    {
+      "question": "Is the Hyperlinked Index MD Generator free to use?",
+      "answer": "Yes, the tool is open-source and free to use. You can find the source code on GitHub, and contributions to the project are welcome."
+    },
+    {
+      "question": "What languages does the Hyperlinked Index MD Generator support?",
+      "answer": "The Hyperlinked Index MD Generator is written in Python and should run on any platform that supports Python. The web app should work in any modern web browser."
+    }
+]
+  
