@@ -1,4 +1,5 @@
 # Hyperlinked Index MD Generator
+### (or simplu Github Repo Table of Contents Generator)
 
 ## Description
 The Hyperlinked Index MD Generator is a simple tool designed for creating structured and navigable markdown documents that serve as comprehensive indexes **(or table of contents)** for project directories. It's available both as a [web app](https://indexgen-36f07323a277.herokuapp.com/) and a [command-line interface (CLI)](https://github.com/aimanfatima/hyperlinked-index-md-generator/blob/main/cli), catering to user different preferences.
