@@ -56,7 +56,7 @@ def generate_linked_markdown():
         return jsonify({"error": "Failed to fetch repo contents or Invalid repo URL"}), 500
 
     # Generate the markdown
-    linked_markdown = generate_markdown(contents)
+    linked_markdown = "# Table of Contents\n\n" + generate_markdown(contents)
 
     # Return the linked markdown as JSON
     return jsonify({"linkedMarkdown": linked_markdown})
