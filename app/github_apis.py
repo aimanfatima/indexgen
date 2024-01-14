@@ -12,7 +12,7 @@ def fetch_repo_contents(api_url):
         return None
 
 def generate_markdown(contents, level=0):
-    markdown = ""
+    markdown = "# Table of Contents\n"
     for content in contents:
         prefix = "    " * level  # Indentation
         if content['type'] == 'dir':
