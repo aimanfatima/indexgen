@@ -22,7 +22,7 @@ def fetch_branches():
 
     # Make a request to the GitHub API to fetch the branches
     headers = {
-        'Authorization': 'token ' + os.environ.get('GIT_TOKEN')
+        'Authorization': 'token ' + os.environ.get('GITHUB_TOKEN')
     }
     response = requests.get(branches_url, headers=headers)
 
