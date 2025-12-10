@@ -11,7 +11,12 @@ function populateBranches(branches) {
 	});
 }
 document.getElementById("repoUrl").onblur = async function () {
-	const repoUrl = document.getElementById("repoUrl").value;
+	const repoUrl = document.getElementById("repoUrl").value.trim();
+
+	// Don't make API call if input is empty
+	if (!repoUrl) {
+		return;
+	}
 
 	const response = await fetch("/fetch-branches", {
 		method: "POST",

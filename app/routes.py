@@ -13,9 +13,15 @@ def index():
 @api.route('/fetch-branches', methods=['POST'])
 def fetch_branches():
     data = request.json
+    
+    repo_url = data.get('repo_url')
+    
+    # Validate that repo_url is provided and not empty
+    if not repo_url or not repo_url.strip():
+        return jsonify({"error": "Repository URL is required"}), 400
 
     # Extract user and repo from the request data
-    user, repo = get_user_and_repo_from_url(data.get('repo_url'))
+    user, repo = get_user_and_repo_from_url(repo_url)
 
     # Construct the GitHub API URL for fetching branches
     branches_url = f"https://api.github.com/repos/{user}/{repo}/branches"
