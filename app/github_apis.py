@@ -2,8 +2,12 @@ import requests
 import os
 
 def fetch_repo_contents(api_url):
+    github_token = os.environ.get('GITHUB_TOKEN')
+    if not github_token:
+        return None
+    
     headers = {
-        'Authorization': 'token ' + os.environ.get('GITHUB_TOKEN')
+        'Authorization': 'token ' + github_token
     }
     response = requests.get(api_url, headers=headers)  # Add authentication headers if needed
     if response.status_code == 200:

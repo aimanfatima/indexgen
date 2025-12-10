@@ -26,9 +26,14 @@ def fetch_branches():
     # Construct the GitHub API URL for fetching branches
     branches_url = f"https://api.github.com/repos/{user}/{repo}/branches"
 
+    # Get GitHub token from environment
+    github_token = os.environ.get('GITHUB_TOKEN')
+    if not github_token:
+        return jsonify({"error": "GitHub token not configured"}), 500
+
     # Make a request to the GitHub API to fetch the branches
     headers = {
-        'Authorization': 'token ' + os.environ.get('GITHUB_TOKEN')
+        'Authorization': 'token ' + github_token
     }
     response = requests.get(branches_url, headers=headers)
 
