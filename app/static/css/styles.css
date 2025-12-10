@@ -28,6 +28,12 @@ body {
     background-color: #d6d6d6; /* Different background color, choose as needed */
     border: 1px solid #ced4da; /* Consistent border with Bootstrap's style */
 }
+
+.branch-select:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
 .input-group .input-group-append .btn {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -36,6 +42,13 @@ body {
     color: black;
     background-color: rgb(240, 211, 49);
     border: 1px solid #ced4da;
+}
+
+.btn-outline-secondary:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 #markdownOutput {
     width: 80%;
