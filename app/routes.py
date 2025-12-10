@@ -1,10 +1,12 @@
 import requests
 import os
+import logging
 from flask import request, jsonify, Blueprint, render_template
 from .github_apis import fetch_repo_contents, generate_markdown
 from .utils.github_utils import convert_repo_url_to_api_endpoint, get_user_and_repo_from_url
 
 api = Blueprint('api', __name__)
+logger = logging.getLogger(__name__)
 
 @api.route('/')
 def index():
@@ -28,19 +30,35 @@ def fetch_branches():
 
     # Get GitHub token from environment
     github_token = os.environ.get('GITHUB_TOKEN')
+    logger.info(f"Fetching branches for repo: {repo_url}")
+    logger.info(f"Extracted user: {user}, repo: {repo}")
+    logger.info(f"Branches URL: {branches_url}")
+    
     if not github_token:
+        logger.error("GITHUB_TOKEN environment variable is not set")
         return jsonify({"error": "GitHub token not configured"}), 500
+    
+    # Log token info (masked for security)
+    logger.info(f"GitHub token found")
 
     # Make a request to the GitHub API to fetch the branches
     headers = {
         'Authorization': 'token ' + github_token
     }
+    logger.info(f"Making request to GitHub API")
+    
     response = requests.get(branches_url, headers=headers)
+    logger.info(f"GitHub API response status: {response.status_code}")
+    
+    if response.status_code != 200:
+        logger.error(f"GitHub API error response: {response.text}")
+        logger.error(f"Response headers: {dict(response.headers)}")
 
     if response.status_code == 200:
         branches = response.json()
         # Extract just the names of the branches
         branch_names = [branch['name'] for branch in branches]
+        logger.info(f"Successfully fetched {len(branch_names)} branches")
         return jsonify(branch_names)
     else:
         # Handle errors or no branches found
