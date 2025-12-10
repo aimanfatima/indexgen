@@ -15,7 +15,6 @@ def fetch_repo_contents(api_url):
     headers = {
         'Authorization': 'token ' + github_token
     }
-    logger.info(f"Making request to GitHub API with headers: Authorization: token {token_preview}")
     
     response = requests.get(api_url, headers=headers)  # Add authentication headers if needed
     logger.info(f"GitHub API response status: {response.status_code}")
