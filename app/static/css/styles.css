@@ -10,6 +10,7 @@ body {
 .form-group {
     max-width: 65%;
     margin: auto;
+    padding: 0 15px;
 }
 .input-group {
     border-radius: 20px;
@@ -50,42 +51,63 @@ body {
     cursor: not-allowed;
     opacity: 0.6;
 }
-#markdownOutput {
+/* Main box container for tabs and content */
+.main-box {
     width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Container for tabs and content */
+.tabs-container {
+    width: 100%;
+}
+
+#markdownOutput {
+    width: 100%;
     height: 500px;
     margin: 0px auto;
     display: block;
 }
-#copyButton {
+
+/* Position relative container for floating buttons */
+.position-relative {
+    width: 100%;
+    position: relative;
+}
+
+.floating-actions {
     position: absolute;
+    top: clamp(8px, 1vw, 16px);
+    inset-inline-start: 100%;
+    transform: translateX(clamp(12px, 2vw, 28px));
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 2vw, 20px);
+    align-items: center;
+    z-index: 10;
+}
+
+.floating-actions .btn {
     background-color: rgb(11, 56, 95);
     color: white;
-    top: 0px;
-    right: 75px;
-    width: 60px;
-    height: 60px;
+    width: clamp(48px, 6vw, 56px);
+    height: clamp(48px, 6vw, 56px);
     border-radius: 50%;
     text-align: center;
     padding: 0;
-    z-index: 10; /* Ensure it's above other elements */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #downloadButton {
-    position: absolute;
     background-color: rgb(95, 11, 11);
-    color: white;
-    top: 80px;
-    right: 75px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    text-align: center;
-    padding: 0;
-    z-index: 10; /* Ensure it's above other elements */
 }
 
 .markdown-preview {
-    width: 80%;
+    width: 100%;
     height: 500px;
     margin: 0px auto;
     display: block;
@@ -105,8 +127,8 @@ body {
 /* Ensure the nav-tabs fill the width */
 
 .nav-tabs {
-    width: 79.7%;
-    margin-left: 148px;
+    width: 100%;
+    margin: 0 auto;
     text-align: center;
 }
 
@@ -191,4 +213,127 @@ html {
     padding: 0;
     width: 100%;
     height: 100%;
+}
+
+/* Responsive adjustments - only apply when needed */
+@media (max-width: 1200px) {
+    .form-group {
+        max-width: 75%;
+    }
+    
+    .tabs-container,
+    .position-relative {
+        width: 85%;
+    }
+}
+
+@media (max-width: 992px) {
+    .form-group {
+        max-width: 85%;
+    }
+    
+    .tabs-container,
+    .position-relative {
+        width: 90%;
+    }
+    
+    .floating-actions {
+        transform: translateX(clamp(10px, 3vw, 24px));
+    }
+}
+
+@media (max-width: 768px) {
+    .form-group {
+        max-width: 95%;
+        padding: 0 10px;
+    }
+    
+    .input-group {
+        flex-wrap: wrap;
+        border-radius: 12px;
+    }
+    
+    .input-group .form-control {
+        width: 100% !important;
+        border-radius: 12px 12px 0 0;
+        margin-bottom: 0;
+    }
+    
+    .branch-select {
+        width: 50% !important;
+        border-radius: 0;
+        border-top: none;
+    }
+    
+    .input-group-append {
+        width: 50%;
+    }
+    
+    .input-group .input-group-append .btn {
+        width: 100%;
+        border-radius: 0 0 12px 0;
+        border-top: none;
+    }
+    
+    .tabs-container,
+    .position-relative {
+        width: 95%;
+        padding: 0 10px;
+    }
+    
+    .floating-actions {
+        top: 12px;
+        transform: translateX(clamp(10px, 4vw, 18px));
+        gap: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-group {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    
+    .input-group .form-control {
+        border-radius: 12px 12px 0 0;
+    }
+    
+    .branch-select {
+        width: 100% !important;
+        border-radius: 0;
+        border-left: 1px solid #ced4da;
+        border-right: 1px solid #ced4da;
+    }
+    
+    .input-group-append {
+        width: 100%;
+    }
+    
+    .input-group .input-group-append .btn {
+        width: 100%;
+        border-radius: 0 0 12px 12px;
+    }
+    
+    .tabs-container,
+    .position-relative {
+        width: 100%;
+        padding: 0 15px;
+    }
+    
+    #markdownOutput,
+    .markdown-preview {
+        height: 400px;
+    }
+    
+    .floating-actions {
+        top: 10px;
+        transform: translateX(12px);
+        gap: 10px;
+    }
+    
+    .floating-actions .btn {
+        width: 48px;
+        height: 48px;
+        font-size: 0.9rem;
+    }
 }
